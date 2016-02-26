@@ -68,7 +68,7 @@ void controllerChange(int channel, int number, int value) {
 }
 
 
-int xspacing = 16;   // How far apart should each horizontal location be spaced
+int xspacing = 30;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
 
 float theta = 0.0;  // Start angle at 0
@@ -92,12 +92,12 @@ void draw() {
 
 void calcWave() {
   // Increment theta (try different values for 'angular velocity' here
-  theta += 0.02;
+  theta += 0.05;
 
   // For every x value, calculate a y value with sine function
   float x = theta;
   for (int i = 0; i < yvalues.length; i++) {
-    yvalues[i] = sin(x)*amplitude;
+    yvalues[i] = sin(x)*amplitude*map(knobValues[0],0,1,0,3);
     x+=dx;
   }
 }
@@ -107,6 +107,6 @@ void renderWave() {
   fill(255);
   // A simple way to draw the wave with an ellipse at each location
   for (int x = 0; x < yvalues.length; x++) {
-    ellipse(x*xspacing, height/2+yvalues[x], 16, 16);
+    ellipse(x*xspacing, height/2+yvalues[x], 32, 32);
   }
 }

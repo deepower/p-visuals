@@ -3,6 +3,7 @@ import hype.*;
 HCanvas canvas;
 HRect   rectHats;
 HRect   rectDrum;
+HRect   rectPiano;
 
 import themidibus.*; //Import the library
 MidiBus myBus; // The MidiBus
@@ -13,6 +14,8 @@ VideoExport videoExport;
 int knobsNum = 8;
 
 float knobValues[] = new float[knobsNum+1];
+
+int heightOut = -50;
 
 void setup() {
   // size(1280, 720);
@@ -27,6 +30,7 @@ void setup() {
 
   canvas.add( rectHats = new HRect(100).rounding(0) ).noStroke().fill(#99ff00).rotate(45).stroke(#99ff00);
   canvas.add( rectDrum = new HRect(100).rounding(0) ).noStroke().fill(#ffffff).rotate(45).stroke(#ffffff);
+  canvas.add( rectPiano = new HRect(100).rounding(0) ).noStroke().fill(#0099ff).rotate(45).stroke(#0099ff);
 
   videoExport = new VideoExport(this, "basic.mp4");
 }
@@ -35,14 +39,19 @@ void draw() {
   rectHats.loc( (int)random(width), (int)random(height));
   rectHats.strokeWeight(map(knobValues[1], 0, 1, 10, 20));
   rectHats.size(map(knobValues[1], 0, 1, 0, 20), map(knobValues[1], 0, 1, 0, 5000));
-  rectDrum.loc( (int)random(width), -50);
+  rectDrum.loc( (int)random(width), heightOut);
   rectDrum.strokeWeight(map(knobValues[0], 0, 1, 50, 100));
   rectDrum.size(map(knobValues[0], 0, 1, 20, 50), map(knobValues[0], 0, 1, 0, 5000));
+  rectPiano.loc( (int)random(width), heightOut);
+  rectPiano.strokeWeight(map(knobValues[2], 0.1, 1, 0, 50));
+  rectPiano.size(0, 5000);
   H.drawStage();
   // videoExport.saveFrame();
 }
 
 void controllerChange(int channel, int number, int value) {
   // Receive new value on knob modification
-  knobValues[number] = value/127.000;
+  if(number < knobsNum) {
+    knobValues[number] = value/127.000;
+  }
 }

@@ -67,6 +67,14 @@ class DeepShow {
           }
         }
       )
+      .onRequest(
+        new HCallback() {
+          public void run(Object obj) {
+            HDrawable d = (HDrawable) obj;
+            d.scale(2,2);
+          }
+        }
+      )
 
       .requestAll()
     ;

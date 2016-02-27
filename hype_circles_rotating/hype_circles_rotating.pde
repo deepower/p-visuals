@@ -10,10 +10,6 @@ MidiBus myBus; // The MidiBus
 
 DeepShow myShow;
 
-int knobsNum = 12;
-
-float knobValues[] = new float[knobsNum+1];
-
 void setup() {
   size(1280,720);
   H.init(this).background(#000000);
@@ -69,26 +65,39 @@ void draw() {
 }
 
 void controllerChange(int channel, int number, int value) {
-  // Receive new value on knob modification
-  if(number < knobsNum) {
-    knobValues[number] = value/127.000;
-  }
+  myShow.controllerChange(channel, number, value);
 }
 
 void noteOn(int channel, int pitch, int velocity) {
-  // Reset the scene when received this note
-  if (channel == 0 && pitch == 0) {
-    pool.drain();
-    pool.shuffleRequestAll();
-  }
+  myShow.noteOn(channel, pitch, velocity);
 }
 
 class DeepShow {
+
+  int knobsNum = 12;
+
+  float knobs[] = new float[knobsNum+1];
+
   void setup(PApplet applet) {
-    MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
+    connectMIDI(applet);
+  }
+  void connectMIDI(PApplet applet) {
+    // MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
     myBus = new MidiBus(applet, 0, 3); // Create a new MidiBus using the device index to select the Midi input and output devices respectively.
   }
   void draw() {
-    println("Deep!");
+  }
+  void controllerChange(int channel, int number, int value) {
+    // Receive new value on knob modification
+    if(number < knobsNum) {
+      knobs[number] = value/127.000;
+    }
+  }
+  void noteOn(int channel, int pitch, int velocity) {
+    // Reset the scene when received this note
+    if (channel == 0 && pitch == 0) {
+      pool.drain();
+      pool.shuffleRequestAll();
+    }
   }
 }

@@ -40,8 +40,8 @@ class DeepShow {
     connectMIDI(applet);
   }
   void connectMIDI(PApplet applet) {
-    // MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-    myBus = new MidiBus(applet, 0, 3); // Create a new MidiBus using the device index to select the Midi input and output devices respectively.
+    MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
+    myBus = new MidiBus(applet, 0, 2); // Create a new MidiBus using the device index to select the Midi input and output devices respectively.
   }
   void draw() {
   }
@@ -94,11 +94,10 @@ class CurrentShow extends DeepShow {
             d
               .noStroke()
               .fill( colors.getColor() )
-              .loc( (int)random(width), (int)random(height) )
+              .loc( (int)random(width), (int)random(height), (float)random(height) )
               .anchor( new PVector(25,25) )
               .rotation( (int)random(360) )
               .size( 25+((int)random(3)*25) )
-              .z((int)random(-10, 10)*25)
               .scale(2,2);
             ;
 
@@ -125,7 +124,9 @@ class CurrentShow extends DeepShow {
     H.drawStage();
   }
   void resetScene() {
-    cameraRotationX = PI/4*random(-1, 1);
-    cameraRotationY = PI/4*random(-1, 1);
+    float kx = random(-1, 1)/8;
+    float ky = random(0, 1)/8;
+    cameraRotationX = PI*kx;
+    cameraRotationY = PI*ky;
   }
 }

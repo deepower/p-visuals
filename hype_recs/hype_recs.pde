@@ -79,11 +79,11 @@ class CurrentShow extends DeepShow {
   }
   void setupSpecific(PApplet applet) {
     H.init(applet).background(#000000).use3D(true);
-    // ortho();
+    ortho();
     translate(width/2, height/2, 0);
     smooth();
     
-    rDrums = new HRect(width*2);
+    rDrums = new HRect(width*3);
 
     rDrums
       .noStroke()
@@ -94,7 +94,7 @@ class CurrentShow extends DeepShow {
 
     H.add(rDrums);
     
-    rBass = new HRect(width*2);
+    rBass = new HRect(width*3);
 
     rBass
       .noStroke()
@@ -109,8 +109,8 @@ class CurrentShow extends DeepShow {
     rotateX(cameraRotationX);
     rotateY(cameraRotationY);
     rotateZ(cameraRotationZ);
-    rDrums.width(width*knobs[0]);
-    rBass.height(height*knobs[1]);
+    rDrums.width(width*map(knobs[0], 0, 1, 0.2, 1));
+    rBass.height(height*map(knobs[1], 0, 1, 0.2, 1));
     H.drawStage();
   }
   void resetScene() {

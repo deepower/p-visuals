@@ -26,7 +26,9 @@ void controllerChange(int channel, int number, int value) {
 }
 
 void noteOn(int channel, int pitch, int velocity) {
-  s.noteOn(channel, pitch, velocity);
+  if (s != null) {
+    s.noteOn(channel, pitch, velocity);
+  }
 }
 
 class DeepShow {

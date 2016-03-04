@@ -19,7 +19,7 @@ int heightOut = -50;
 
 void setup() {
   // size(1280, 720);
-  fullScreen(2);
+  fullScreen(P3D, 2);
   H.init(this).background(#000000);
   
   MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
@@ -45,6 +45,10 @@ void draw() {
   rectPiano.loc( (int)random(width), heightOut);
   rectPiano.strokeWeight(map(knobValues[2], 0.1, 1, 0, 50));
   rectPiano.size(0, 5000);
+  translate(width/2, height/2, 0);
+  rotateX(PI/4*random(-4, 4));
+  rotateY(PI/4);
+  ortho();
   H.drawStage();
   // videoExport.saveFrame();
 }

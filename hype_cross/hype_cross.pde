@@ -1,6 +1,7 @@
 import hype.*;
 import hype.extended.colorist.HColorPool;
 import hype.extended.behavior.HRotate;
+import hype.extended.behavior.HTween;
 
 HDrawablePool pool;
 HColorPool colors;
@@ -76,6 +77,15 @@ class CurrentShow extends DeepShow {
   HRect rDrums, rBass;
   float drumSize;
 
+  int hatPosition;
+  int hatsCount = 10;
+
+  HRect[] hats = new HRect[hatsCount];
+
+  float hatDuration = 0.2;
+
+  HTween t1a, t2a;
+
   CurrentShow(PApplet applet) {
     setup(applet);
   }
@@ -106,6 +116,19 @@ class CurrentShow extends DeepShow {
     ;
 
     H.add(rBass);
+
+    for (int i = 0; i < hats.length; ++i) {
+      hats[i] = new HRect(width*3);
+      hats[i]
+        .noStroke()
+        .fill(#FF9900)
+        .loc(width/2 + random(-width/2, width/2), height/2, 20 + i)
+        .anchorAt(H.CENTER)
+        .size(width/50, height*3)
+      ;
+      H.add(hats[i]);
+    }
+
   }
   void draw() {
     rotateX(cameraRotationX);
@@ -119,7 +142,34 @@ class CurrentShow extends DeepShow {
     float kx = random(-1, 1)/8;
     float ky = random(0, 1)/8;
     drumSize = random(0, 1);
+    /*
     cameraRotationX = PI*kx;
     cameraRotationY = PI*ky;
+    */
+  }
+  void noteHat() {
+    hatPosition++;
+    if (hatPosition > (hatsCount-1)) {
+      hatPosition = 0;
+    }
+
+    println("hatPosition: "+hatPosition);
+
+    t1a = new HTween()
+      .target(hats[hatPosition]).property(H.SCALE)
+      .start( 0 )
+      .end( 1 )
+      .ease(0.9)
+      .spring(0.95)
+    ;
+
+  }
+  void noteOn(int channel, int pitch, int velocity) {
+    // Reset the scene when received this note
+    if (channel == 0 && pitch == 0) {
+      resetScene();
+    } else if (channel == 0 && pitch == 1) {
+      noteHat();
+    }
   }
 }

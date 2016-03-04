@@ -91,6 +91,7 @@ class CurrentShow extends DeepShow {
   }
   void setupSpecific(PApplet applet) {
     H.init(applet).background(#000000).use3D(true);
+    blendMode(ADD);
     ortho();
     translate(width/2, height/2, 0);
     smooth();
@@ -99,8 +100,8 @@ class CurrentShow extends DeepShow {
 
     rDrums
       .noStroke()
-      .fill(colors.getColor())
-      .loc(width/2, height/2)
+      .fill(#bb0000)
+      .loc(width*0.4, height/2)
       .anchorAt(H.CENTER)
     ;
 
@@ -110,8 +111,8 @@ class CurrentShow extends DeepShow {
 
     rBass
       .noStroke()
-      .fill(colors.getColor())
-      .loc(width/2, height/2, 10)
+      .fill(#0040ff)
+      .loc(width*0.6, height/2, 10)
       .anchorAt(H.CENTER)
     ;
 
@@ -121,10 +122,11 @@ class CurrentShow extends DeepShow {
       hats[i] = new HRect(width*3);
       hats[i]
         .noStroke()
-        .fill(#FF9900)
+        .fill(#00f5ff)
         .loc(width/2 + random(-width/2, width/2), height/2, 20 + i)
         .anchorAt(H.CENTER)
         .size(width/50, height*3)
+        .alpha(20)
       ;
       H.add(hats[i]);
     }
@@ -134,8 +136,8 @@ class CurrentShow extends DeepShow {
     rotateX(cameraRotationX);
     rotateY(cameraRotationY);
     rotateZ(cameraRotationZ);
-    rDrums.width(width*map(knobs[0], 0, 1, 0.2, 1));
-    rBass.height(height*map(knobs[1], 0, 1, 0.2, 1));
+    rDrums.width(width*map(knobs[0], 0, 1, 0.01, 1));
+    rBass.width(width*map(knobs[1], 0, 1, 0.01, 0.5));
     H.drawStage();
   }
   void resetScene() {
@@ -153,8 +155,6 @@ class CurrentShow extends DeepShow {
       hatPosition = 0;
     }
 
-    println("hatPosition: "+hatPosition);
-
     t1a = new HTween()
       .target(hats[hatPosition]).property(H.SCALE)
       .start( 0 )
@@ -162,6 +162,8 @@ class CurrentShow extends DeepShow {
       .ease(0.9)
       .spring(0.95)
     ;
+
+    hats[hatPosition].loc(width/2 + random(-width/2, width/2), height/2, 20 + random(20));
 
   }
   void noteOn(int channel, int pitch, int velocity) {

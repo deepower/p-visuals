@@ -11,7 +11,7 @@ MidiBus myBus; // The MidiBus
 CurrentShow s;
 
 void setup() {
-  size(1280,720);
+  size(1280,720, P3D);
   s = new CurrentShow(this);
 }
 
@@ -62,11 +62,17 @@ class DeepShow {
 }
 
 class CurrentShow extends DeepShow {
+  float cameraRotationX;
+  float cameraRotationY;
+  float cameraRotationZ;
+
   CurrentShow(PApplet applet) {
     setup(applet);
   }
   void setupSpecific(PApplet applet) {
-    H.init(applet).background(#000000);
+    H.init(applet).background(#000000).use3D(true);
+    // ortho();
+    translate(width/2, height/2, 0);
     smooth();
     colors = new HColorPool(#FFFFFF, #F7F7F7, #ECECEC, #333333, #0095a8, #00616f, #FF3300, #FF6600);
 
@@ -92,6 +98,8 @@ class CurrentShow extends DeepShow {
               .anchor( new PVector(25,25) )
               .rotation( (int)random(360) )
               .size( 25+((int)random(3)*25) )
+              .z((int)random(-10, 10)*25)
+              .scale(2,2);
             ;
 
             HRotate r = new HRotate();
@@ -103,7 +111,6 @@ class CurrentShow extends DeepShow {
         new HCallback() {
           public void run(Object obj) {
             HDrawable d = (HDrawable) obj;
-            d.scale(2,2);
           }
         }
       )
@@ -112,11 +119,13 @@ class CurrentShow extends DeepShow {
     ;
   }
   void draw() {
+    rotateX(cameraRotationX);
+    rotateY(cameraRotationY);
+    rotateZ(cameraRotationZ);
     H.drawStage();
   }
   void resetScene() {
-    pool.drain();
-    pool.shuffleRequestAll();
+    cameraRotationX = PI/4*random(-1, 1);
+    cameraRotationY = PI/4*random(-1, 1);
   }
-
 }

@@ -92,7 +92,6 @@ class CurrentShow extends DeepShow {
   void setupSpecific(PApplet applet) {
     H.init(applet).background(#000000).use3D(true);
     blendMode(ADD);
-    ortho();
     translate(width/2, height/2, 0);
     smooth();
     
@@ -136,18 +135,16 @@ class CurrentShow extends DeepShow {
     rotateX(cameraRotationX);
     rotateY(cameraRotationY);
     rotateZ(cameraRotationZ);
-    rDrums.width(width*map(knobs[0], 0, 1, 0.01, 1));
-    rBass.width(width*map(knobs[1], 0, 1, 0.01, 0.5));
+    rDrums.width(width*map(knobs[0], 0, 1, 0.01, 0.3));
+    rBass.width(width*map(knobs[1], 0, 1, 0.01, 0.15));
     H.drawStage();
   }
   void resetScene() {
     float kx = random(-1, 1)/8;
     float ky = random(0, 1)/8;
     drumSize = random(0, 1);
-    /*
     cameraRotationX = PI*kx;
     cameraRotationY = PI*ky;
-    */
   }
   void noteHat() {
     hatPosition++;

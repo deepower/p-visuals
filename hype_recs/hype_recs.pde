@@ -20,7 +20,9 @@ void draw() {
 }
 
 void controllerChange(int channel, int number, int value) {
-  s.controllerChange(channel, number, value);
+  if (s != null) {
+    s.controllerChange(channel, number, value);
+  }
 }
 
 void noteOn(int channel, int pitch, int velocity) {
@@ -32,7 +34,7 @@ class DeepShow {
 
   float knobs[] = new float[knobsNum+1];
 
-  HColorPool colors = new HColorPool(#FFFFFF, #F7F7F7, #ECECEC, #333333, #0095a8, #00616f, #FF3300, #FF6600);
+  HColorPool colors = new HColorPool(#FFFFFF, #F7F7F7, #0095a8, #00616f, #FF3300, #FF6600);
 
   void setupSpecific(PApplet applet) {
   }
@@ -40,6 +42,7 @@ class DeepShow {
   void setup(PApplet applet) {
     setupSpecific(applet);
     connectMIDI(applet);
+    println("knobs: "+knobs);
   }
   void connectMIDI(PApplet applet) {
     MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
@@ -68,7 +71,7 @@ class CurrentShow extends DeepShow {
   float cameraRotationY;
   float cameraRotationZ;
 
-  HRect rDrums;
+  HRect rDrums, rBass;
   float drumSize;
 
   CurrentShow(PApplet applet) {
@@ -80,7 +83,7 @@ class CurrentShow extends DeepShow {
     translate(width/2, height/2, 0);
     smooth();
     
-    rDrums = new HRect(width);
+    rDrums = new HRect(width*2);
 
     rDrums
       .noStroke()
@@ -90,12 +93,24 @@ class CurrentShow extends DeepShow {
     ;
 
     H.add(rDrums);
+    
+    rBass = new HRect(width*2);
+
+    rBass
+      .noStroke()
+      .fill(colors.getColor())
+      .loc(width/2, height/2, 10)
+      .anchorAt(H.CENTER)
+    ;
+
+    H.add(rBass);
   }
   void draw() {
     rotateX(cameraRotationX);
     rotateY(cameraRotationY);
     rotateZ(cameraRotationZ);
-    rDrums.width(width*drumSize);
+    rDrums.width(width*knobs[0]);
+    rBass.height(height*knobs[1]);
     H.drawStage();
   }
   void resetScene() {

@@ -2,6 +2,7 @@ import de.looksgood.ani.*;
 import hype.*;
 
 float x, y;
+int alpha = 255;
 
 HRect rect1;
 
@@ -25,12 +26,13 @@ void setup() {
 }
 
 void draw() {
-  rect1.loc(x, y);
+  rect1.loc(x, y).alpha(alpha);
   H.drawStage();
 }
 
 void mouseReleased() {
-  println("mouse!");
   Ani.to(this, 0.5, "x", mouseX, Ani.BOUNCE_OUT);
   Ani.to(this, 0.5, "y", mouseY, Ani.BOUNCE_OUT);
+  alpha = 255;
+  Ani.to(this, 0.7, "alpha", 0, Ani.BOUNCE_OUT);
 }

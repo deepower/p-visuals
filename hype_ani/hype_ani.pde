@@ -10,6 +10,8 @@ int apos = 0;
 
 HRect rect1;
 
+Show s;
+
 void setup() {
   size(1280,720);
   smooth();
@@ -29,16 +31,35 @@ void setup() {
   H.add(rect1);
 
   anims[0] = 5;
+
+  s = new Show();
 }
 
 void draw() {
-  rect1.loc(x, y).alpha(anims[apos]);
+  rect1.loc(x, y).alpha(s.alpha);
   H.drawStage();
+  println("s.alpha: "+s.alpha);
+  println("s.anims[0]: "+s.anims[0]);
+  println("s.anims[1]: "+s.anims[1]);
 }
 
 void mouseReleased() {
   Ani.to(this, 0.5, "x", mouseX, Ani.BOUNCE_OUT);
   Ani.to(this, 0.5, "y", mouseY, Ani.BOUNCE_OUT);
-  anims[apos] = 255;
-  Ani.to(this, 0.7, "anims[apos]", 0, Ani.BOUNCE_OUT);
+  s.startAnim();
+}
+
+class Show {
+  int[] anims = new int[10];
+  int apos = 0;
+  Ani a1, a2;
+  int alpha = 0;
+  void startAnim() {
+    println("startAnim!");
+    anims[apos] = 255;
+    alpha = 255;
+    a1 = new Ani(this, 2, "anims[apos]", 0, Ani.BOUNCE_OUT);
+    a2 = new Ani(this, 2, "alpha", 0, Ani.BOUNCE_OUT);
+    anims[apos + 1] = 100;
+  }
 }

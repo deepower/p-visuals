@@ -88,7 +88,7 @@ class CurrentShow extends DeepShow {
   int[] animAlpha = new int[hatsCount];
   int[] animScale = new int[hatsCount];
 
-  int a;
+  int at;
 
   CurrentShow(PApplet applet) {
     setup(applet);
@@ -147,6 +147,9 @@ class CurrentShow extends DeepShow {
     rDrums.width(width*map(knobs[0], 0, 1, 0.01, 0.3));
     rBass.width(width*map(knobs[1], 0, 1, 0.01, 0.15));
     H.drawStage();
+    println("hatPosition: "+hatPosition);
+    println("animAlpha[0]: "+animAlpha[0]);
+    println("at: "+at);
   }
   void resetScene() {
     float kx = random(-2, 2)/8;
@@ -163,14 +166,13 @@ class CurrentShow extends DeepShow {
 
     hats[hatPosition].loc(width/2 + random(-width/2, width/2), height/2, 20 + random(20));
 
-    a = 0;
+    // animAlpha[hatPosition] = 0;
 
-    Ani.to(this, 1.0, "a", 255, Ani.BOUNCE_OUT);
+    animAlpha[0] = 0;
+    Ani.to(this, 1.0, "animAlpha[0]", 255, Ani.BOUNCE_OUT);
 
-    animAlpha[hatPosition] = a;
-
-    println("hatPosition: "+hatPosition);
-    println("animAlpha[hatPosition]: "+animAlpha[hatPosition]);
+    at = 0;
+    Ani.to(this, 1.0, "at", 255, Ani.BOUNCE_OUT);
 
   }
   void noteOn(int channel, int pitch, int velocity) {

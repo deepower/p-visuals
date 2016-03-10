@@ -6,6 +6,8 @@ int alpha = 255;
 
 int[] anims = new int[10];
 
+int apos = 0;
+
 HRect rect1;
 
 void setup() {
@@ -30,13 +32,13 @@ void setup() {
 }
 
 void draw() {
-  rect1.loc(x, y).alpha(anims[0]);
+  rect1.loc(x, y).alpha(anims[apos]);
   H.drawStage();
 }
 
 void mouseReleased() {
   Ani.to(this, 0.5, "x", mouseX, Ani.BOUNCE_OUT);
   Ani.to(this, 0.5, "y", mouseY, Ani.BOUNCE_OUT);
-  anims[0] = 255;
-  Ani.to(this, 0.7, "anims[0]", 0, Ani.BOUNCE_OUT);
+  anims[apos] = 255;
+  Ani.to(this, 0.7, "anims[apos]", 0, Ani.BOUNCE_OUT);
 }

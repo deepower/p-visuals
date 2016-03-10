@@ -4,6 +4,8 @@ import hype.*;
 float x, y;
 int alpha = 255;
 
+int[] anims = new int[10];
+
 HRect rect1;
 
 void setup() {
@@ -23,16 +25,18 @@ void setup() {
   rect1.rotation(45);         // set rotation of the rect
   rect1.loc(100,height / 2);  // set x and y location
   H.add(rect1);
+
+  anims[0] = 5;
 }
 
 void draw() {
-  rect1.loc(x, y).alpha(alpha);
+  rect1.loc(x, y).alpha(anims[0]);
   H.drawStage();
 }
 
 void mouseReleased() {
   Ani.to(this, 0.5, "x", mouseX, Ani.BOUNCE_OUT);
   Ani.to(this, 0.5, "y", mouseY, Ani.BOUNCE_OUT);
-  alpha = 255;
-  Ani.to(this, 0.7, "alpha", 0, Ani.BOUNCE_OUT);
+  anims[0] = 255;
+  Ani.to(this, 0.7, "anims[0]", 0, Ani.BOUNCE_OUT);
 }

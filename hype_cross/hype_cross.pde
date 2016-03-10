@@ -85,7 +85,10 @@ class CurrentShow extends DeepShow {
 
   float hatDuration = 0.2;
 
-  HTween t1a, t2a;
+  int[] animAlpha = new int[hatsCount];
+  int[] animScale = new int[hatsCount];
+
+  int a;
 
   CurrentShow(PApplet applet) {
     setup(applet);
@@ -160,6 +163,15 @@ class CurrentShow extends DeepShow {
 
     hats[hatPosition].loc(width/2 + random(-width/2, width/2), height/2, 20 + random(20));
 
+    a = 0;
+
+    Ani.to(this, 1.0, "a", 255, Ani.BOUNCE_OUT);
+
+    animAlpha[hatPosition] = a;
+
+    println("hatPosition: "+hatPosition);
+    println("animAlpha[hatPosition]: "+animAlpha[hatPosition]);
+
   }
   void noteOn(int channel, int pitch, int velocity) {
     // Reset the scene when received this note
@@ -169,10 +181,4 @@ class CurrentShow extends DeepShow {
       noteHat();
     }
   }
-}
-
-void mouseReleased() {
-  println("mouse!");
-  Ani.to(this, 1.0, "x", mouseX, Ani.BOUNCE_OUT);
-  Ani.to(this, 1.0, "y", mouseY, Ani.BOUNCE_OUT);
 }

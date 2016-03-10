@@ -2,7 +2,6 @@ import hype.*;
 import hype.extended.colorist.HColorPool;
 import hype.extended.behavior.HRotate;
 import hype.extended.behavior.HTween;
-import de.looksgood.ani.*;
 
 HDrawablePool pool;
 HColorPool colors;
@@ -75,17 +74,11 @@ class CurrentShow extends DeepShow {
   float cameraRotationY;
   float cameraRotationZ;
 
-  HRect rDrums, rBass;
-  float drumSize;
+  HRect  r1, r2, r3;
 
-  int hatPosition;
-  int hatsCount = 10;
-
-  HRect[] hats = new HRect[hatsCount];
-
-  float hatDuration = 0.2;
-
-  HTween t1a, t2a;
+  HTween t1a, t1b;
+  HTween t2a, t2b;
+  HTween t3a, t3b, t3c, t3d;
 
   CurrentShow(PApplet applet) {
     setup(applet);
@@ -95,73 +88,66 @@ class CurrentShow extends DeepShow {
     blendMode(ADD);
     translate(width/2, height/2, 0);
     smooth();
-
-    Ani.init(applet);
     
-    rDrums = new HRect(width*3);
+    r1 = new HRect(100).rounding(10);
+    r1
+    .stroke(#000000, 100)
+    .fill(#FF9900)
+    .anchorAt(H.CENTER)
+    .loc(125,125)
+    .rotation(45)
+    ;
+    H.add(r1);
 
-    rDrums
-      .noStroke()
-      .fill(#bb0000)
-      .loc(width*0.4, height/2)
-      .anchorAt(H.CENTER)
+    t1a = new HTween()
+    .target(r1).property(H.LOCATION)
+    .start( r1.x(), r1.y() )
+    .end( r1.x(), height - 125 )
+    .ease(0.4)
+    .spring(0.6)
     ;
 
-    H.add(rDrums);
-    
-    rBass = new HRect(width*3);
-
-    rBass
-      .noStroke()
-      .fill(#0040ff)
-      .loc(width*0.6, height/2, 10)
-      .anchorAt(H.CENTER)
+  t1b = new HTween()
+    .target(r1).property(H.ALPHA)
+    .start(255)
+    .end(0)
+    .ease(0.6)
+    .spring(0.9)
     ;
 
-    H.add(rBass);
+  // Rect 2 and tweens
 
-    for (int i = 0; i < hats.length; ++i) {
-      hats[i] = new HRect(width*3);
-      hats[i]
-        .noStroke()
-        .fill(#00f5ff)
-        .loc(width/2 + random(-width/2, width/2), height/2, 20 + i)
-        .anchorAt(H.CENTER)
-        .size(width/50, height*3)
-        .alpha(255)
-      ;
-      H.add(hats[i]);
-    }
+  H.add(r2 = new HRect(100)).rounding(10).stroke(#000000, 100).fill(#FF6600).anchorAt(H.CENTER).loc(width/2,125).rotation(45);
 
-    fill(255);
-    ellipse(50, 50, 100, 100);
+  t2a = new HTween().target(r2).property(H.LOCATION).start( r2.x(), r2.y() ).end( r2.x(), height - 125 ).ease(0.005).spring(0.95);
+  t2b = new HTween().target(r2).property(H.SCALE).start(0).end(1).ease(0.005).spring(0.95);
 
-  }
-  void draw() {
-    rotateX(cameraRotationX);
-    rotateY(cameraRotationY);
-    rotateZ(cameraRotationZ);
-    rDrums.width(width*map(knobs[0], 0, 1, 0.01, 0.3));
-    rBass.width(width*map(knobs[1], 0, 1, 0.01, 0.15));
-    H.drawStage();
-  }
-  void resetScene() {
-    float kx = random(-2, 2)/8;
-    float ky = random(0, 2)/8;
-    drumSize = random(0, 1);
-    cameraRotationX = PI*kx;
-    cameraRotationY = PI*ky;
-  }
-  void noteHat() {
-    hatPosition++;
-    if (hatPosition > (hatsCount-1)) {
-      hatPosition = 0;
-    }
+  // Rect 3 and tweens
 
-    hats[hatPosition].loc(width/2 + random(-width/2, width/2), height/2, 20 + random(20));
+  H.add(r3 = new HRect(100)).rounding(10).stroke(#000000, 100).fill(#FF3300).anchorAt(H.CENTER).loc(width-125,125).rotation(45);
 
-  }
-  void noteOn(int channel, int pitch, int velocity) {
+  t3a = new HTween().target(r3).property(H.LOCATION).start( r3.x(), r3.y() ).end( r3.x(), height - 125 ).ease(0.005).spring(0.95);
+  t3b = new HTween().target(r3).property(H.SCALE).start(0).end(1).ease(0.005).spring(0.95);
+  t3c = new HTween().target(r3).property(H.ALPHA).start(0).end(255).ease(0.005).spring(0.95);
+  t3d = new HTween().target(r3).property(H.ROTATION).start(-45).end(405).ease(0.005).spring(0.95);
+
+}
+void draw() {
+  rotateX(cameraRotationX);
+  rotateY(cameraRotationY);
+  rotateZ(cameraRotationZ);
+  H.drawStage();
+}
+void resetScene() {
+  float kx = random(-2, 2)/8;
+  float ky = random(0, 2)/8;
+  cameraRotationX = PI*kx;
+  cameraRotationY = PI*ky;
+}
+void noteHat() {
+
+}
+void noteOn(int channel, int pitch, int velocity) {
     // Reset the scene when received this note
     if (channel == 0 && pitch == 0) {
       resetScene();
@@ -169,10 +155,4 @@ class CurrentShow extends DeepShow {
       noteHat();
     }
   }
-}
-
-void mouseReleased() {
-  println("mouse!");
-  Ani.to(this, 1.0, "x", mouseX, Ani.BOUNCE_OUT);
-  Ani.to(this, 1.0, "y", mouseY, Ani.BOUNCE_OUT);
 }

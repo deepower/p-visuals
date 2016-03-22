@@ -41,8 +41,6 @@ class DeepShow {
 
   float knobs[] = new float[knobsNum+1];
 
-  HColorPool colors = new HColorPool(#FFFFFF, #F7F7F7, #0095a8, #00616f, #FF3300, #FF6600);
-
   void setupSpecific(PApplet applet) {
   }
 

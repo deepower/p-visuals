@@ -77,12 +77,15 @@ class CurrentShow extends DeepShow {
 
   int at;
 
+  PImage facetopi, facebottomi;
+
+  HImage facetop, facebottom;
+
   CurrentShow(PApplet applet) {
     setup(applet);
   }
   void setupSpecific(PApplet applet) {
     H.init(applet).background(#000000).use3D(true);
-    blendMode(ADD);
     translate(width/2, height/2, 0);
     smooth();
 
@@ -98,9 +101,20 @@ class CurrentShow extends DeepShow {
     ;
 
     H.add(rDrums);
+
+    facetopi = loadImage("facetop.png");
+    facetop = new HImage(facetopi);
+    facetop.z(10);
+    H.add(facetop);
+
+    facebottomi = loadImage("facebottom.png");
+    facebottom = new HImage(facebottomi);
+    facebottom.z(10);
+    H.add(facebottom);
   }
   void draw() {
     rDrums.height(height*map(knobs[0], 0, 1, 0.01, 0.3));
+    facebottom.loc(0, map(knobs[1], 0, 1, 0, height/25));
     H.drawStage();
   }
   void resetScene() {

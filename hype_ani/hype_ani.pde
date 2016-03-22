@@ -39,7 +39,7 @@ void draw() {
   rect1.loc(x, y).alpha(s.alpha);
   H.drawStage();
   println("s.alpha: "+s.alpha);
-  println("s.anims[0]: "+s.anims[0]);
+  println("s.anims[s.apos]: "+s.anims[s.apos]);
   println("s.anims[1]: "+s.anims[1]);
 }
 

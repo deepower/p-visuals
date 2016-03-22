@@ -48,9 +48,9 @@ class DRect extends HRect {
   }
   void animStart() {
     alpha = 0;
-    a1 = new Ani(this, 0.5, "x", mouseX, Ani.BOUNCE_OUT);
-    a2 = new Ani(this, 0.5, "y", mouseY, Ani.BOUNCE_OUT);
-    a3 = new Ani(this, 0.5, "alpha", 255, Ani.BOUNCE_OUT);
+    a1 = new Ani(this, 0.5, "x", mouseX, Ani.CIRC_IN_OUT);
+    a2 = new Ani(this, 0.5, "y", mouseY, Ani.CIRC_IN_OUT);
+    a3 = new Ani(this, 0.5, "alpha", 255, Ani.CIRC_IN_OUT);
   }
   void animDraw() {
     rect1.loc(x, y).alpha(alpha);

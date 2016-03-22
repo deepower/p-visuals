@@ -12,8 +12,11 @@ MidiBus myBus; // The MidiBus
 
 CurrentShow s;
 
+int showW = 1280;
+int showH = 720;
+
 void setup() {
-  size(1280,720, P3D);
+  size(1280, 720, P3D);
   s = new CurrentShow(this);
 }
 
@@ -81,7 +84,7 @@ class CurrentShow extends DeepShow {
   int hatPosition;
   int hatsCount = 10;
 
-  HRect[] hats = new HRect[hatsCount];
+  DRect[] hats = new DRect[hatsCount];
 
   float hatDuration = 0.2;
 
@@ -124,10 +127,10 @@ class CurrentShow extends DeepShow {
     H.add(rBass);
 
     for (int i = 0; i < hats.length; ++i) {
-      hats[i] = new HRect(width*3);
+      hats[i] = new DRect(width*3);
       hats[i]
         .noStroke()
-        .fill(#00f5ff)
+        .fill(#ffffff)
         .loc(width/2 + random(-width/2, width/2), height/2, 20 + i)
         .anchorAt(H.CENTER)
         .size(width/50, height*3)
@@ -146,10 +149,10 @@ class CurrentShow extends DeepShow {
     rotateZ(cameraRotationZ);
     rDrums.width(width*map(knobs[0], 0, 1, 0.01, 0.3));
     rBass.width(width*map(knobs[1], 0, 1, 0.01, 0.15));
+    for (int i = 0; i < hats.length; ++i) {
+      hats[i].animDraw();
+    }
     H.drawStage();
-    println("hatPosition: "+hatPosition);
-    println("animAlpha[0]: "+animAlpha[0]);
-    println("at: "+at);
   }
   void resetScene() {
     float kx = random(-2, 2)/8;
@@ -164,15 +167,7 @@ class CurrentShow extends DeepShow {
       hatPosition = 0;
     }
 
-    hats[hatPosition].loc(width/2 + random(-width/2, width/2), height/2, 20 + random(20));
-
-    // animAlpha[hatPosition] = 0;
-
-    animAlpha[0] = 0;
-    Ani.to(this, 1.0, "animAlpha[0]", 255, Ani.BOUNCE_OUT);
-
-    at = 0;
-    Ani.to(this, 1.0, "at", 255, Ani.BOUNCE_OUT);
+    hats[hatPosition].animStart();
 
   }
   void noteOn(int channel, int pitch, int velocity) {
@@ -184,3 +179,21 @@ class CurrentShow extends DeepShow {
     }
   }
 }
+
+class DRect extends HRect {
+  float xscale, yscale;
+  int alpha;
+  Ani a1, a2, a3;
+
+  DRect(int size) {
+    super(size);
+  }
+  void animStart() {
+    alpha = 255;
+    a1 = new Ani(this, 0.5, "alpha", 0, Ani.CIRC_IN_OUT);
+    this.loc(showW/2 + random(-showW/2, showW/2), showH/2, 20 + random(20));
+  }
+  void animDraw() {
+    this.alpha(alpha);
+  }
+} 

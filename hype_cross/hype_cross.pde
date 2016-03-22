@@ -131,9 +131,8 @@ class CurrentShow extends DeepShow {
       hats[i]
         .noStroke()
         .fill(#ffffff)
-        .loc(width/2 + random(-width/2, width/2), height/2, 20 + i)
         .anchorAt(H.CENTER)
-        .size(width/50, height*3)
+        .size(width/10, height*3)
         .alpha(255)
       ;
       H.add(hats[i]);
@@ -181,7 +180,7 @@ class CurrentShow extends DeepShow {
 }
 
 class DRect extends HRect {
-  float xscale, yscale;
+  float xscale, xwidth;
   int alpha;
   Ani a1, a2, a3;
 
@@ -189,11 +188,14 @@ class DRect extends HRect {
     super(size);
   }
   void animStart() {
-    alpha = 255;
-    a1 = new Ani(this, 0.5, "alpha", 0, Ani.CIRC_IN_OUT);
     this.loc(showW/2 + random(-showW/2, showW/2), showH/2, 20 + random(20));
+    alpha = 255;
+    a1 = new Ani(this, 2, "alpha", 0, Ani.EXPO_OUT);
+
+    xwidth = 50;
+    a2 = new Ani(this, 2, "xwidth", 0, Ani.EXPO_OUT);
   }
   void animDraw() {
-    this.alpha(alpha);
+    this.alpha(alpha).width(xwidth);
   }
 } 

@@ -9,9 +9,10 @@ CC levels:
 
 Notes:
 
-- 16B: 0 (C-2)
-- 4B: 1 (C#-2)
-- 1B: 2 (D-2)
+- Every 16th beat: 0 (C-2)
+- Every 4B: 1 (C#-2)
+- Every 1B: 2 (D-2)
+- Hats: 20 (not yet implemented)
 
 ## Big thanks to ##
 

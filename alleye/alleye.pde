@@ -3,6 +3,7 @@ import hype.extended.colorist.HColorPool;
 import hype.extended.behavior.HRotate;
 import hype.extended.behavior.HTween;
 import de.looksgood.ani.*;
+import codeanticode.syphon.*;
 
 HDrawablePool pool;
 HColorPool colors;
@@ -15,9 +16,13 @@ CurrentShow s;
 int showW = 1280;
 int showH = 720;
 
+PGraphics canvas;
+SyphonServer server;
+
 void setup() {
   size(1280, 720, P3D);
   s = new CurrentShow(this);
+  server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
@@ -47,12 +52,21 @@ class DeepShow {
   void setup(PApplet applet) {
     setupSpecific(applet);
     connectMIDI(applet);
+    streamSyphon(applet);
   }
   void connectMIDI(PApplet applet) {
     MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
     myBus = new MidiBus(applet, 0, 2); // Create a new MidiBus using the device index to select the Midi input and output devices respectively.
   }
+  void streamSyphon(PApplet applet) {
+    canvas = createGraphics(1280, 720, P3D);
+  }
+  void drawSyphon() {
+    image(canvas, 0, 0);
+    server.sendImage(canvas);
+  }
   void draw() {
+    drawSyphon();
   }
   void resetScene() {
   }

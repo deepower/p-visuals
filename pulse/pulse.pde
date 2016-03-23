@@ -85,6 +85,7 @@ class CurrentShow extends DeepShow {
   void setupSpecific(PApplet applet) {
     H.init(applet).background(#000000).use3D(true);
     blendMode(ADD);
+    hint(DISABLE_DEPTH_TEST);
     translate(width/2, height/2, 0);
     smooth();
 
@@ -112,6 +113,7 @@ class CurrentShow extends DeepShow {
         .z(-10)
         .width(showW/10)
       ;
+      basses[i].animStart();
       H.add(basses[i]);
     }
 

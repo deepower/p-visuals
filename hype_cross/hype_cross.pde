@@ -1,23 +1,25 @@
 import hype.*;
-import hype.extended.colorist.HColorPool;
-import hype.extended.behavior.HRotate;
-import hype.extended.behavior.HTween;
 import de.looksgood.ani.*;
+import codeanticode.syphon.*;
 
-HDrawablePool pool;
-HColorPool colors;
+SyphonServer server;
 
 import themidibus.*; //Import the library
 MidiBus myBus; // The MidiBus
 
 CurrentShow s;
 
-int showW = 1280;
+int showW = 2560;
 int showH = 720;
 
+void settings() {
+  size(showW, showH, P3D);
+  PJOGL.profile=1;
+}
+
 void setup() {
-  size(1280, 720, P3D);
   s = new CurrentShow(this);
+  server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
@@ -40,8 +42,6 @@ class DeepShow {
   int knobsNum = 12;
 
   float knobs[] = new float[knobsNum+1];
-
-  HColorPool colors = new HColorPool(#FFFFFF, #F7F7F7, #0095a8, #00616f, #FF3300, #FF6600);
 
   void setupSpecific(PApplet applet) {
   }
@@ -106,7 +106,7 @@ class CurrentShow extends DeepShow {
     rDrums
       .noStroke()
       .fill(#bb0000)
-      .loc(width*0.4, height/2)
+      .loc(width*0.25, height/2)
       .anchorAt(H.CENTER)
     ;
 
@@ -117,7 +117,7 @@ class CurrentShow extends DeepShow {
     rBass
       .noStroke()
       .fill(#0040ff)
-      .loc(width*0.6, height/2, 10)
+      .loc(width*0.75, height/2, 10)
       .anchorAt(H.CENTER)
     ;
 
@@ -149,6 +149,7 @@ class CurrentShow extends DeepShow {
       hats[i].animDraw();
     }
     H.drawStage();
+    server.sendScreen();
   }
   void resetScene() {
     float kx = random(-2, 2)/8;

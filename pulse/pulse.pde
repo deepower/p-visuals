@@ -1,14 +1,8 @@
 import hype.*;
-import hype.extended.colorist.HColorPool;
-import hype.extended.behavior.HRotate;
-import hype.extended.behavior.HTween;
 import de.looksgood.ani.*;
 import codeanticode.syphon.*;
 
 SyphonServer server;
-
-HDrawablePool pool;
-HColorPool colors;
 
 import themidibus.*; //Import the library
 MidiBus myBus; // The MidiBus
@@ -30,7 +24,6 @@ void setup() {
 
 void draw() {
   s.draw();
-  server.sendScreen();
 }
 
 void controllerChange(int channel, int number, int value) {
@@ -81,7 +74,7 @@ class DeepShow {
 
 class CurrentShow extends DeepShow {
   int drumCount = 5;
-  int bassCount = 5;
+  int bassCount = 10;
   int mainCount = 2;
 
   DRect[] drums = new DRect[drumCount];
@@ -136,6 +129,7 @@ class CurrentShow extends DeepShow {
       basses[i].animDraw();
     }
     H.drawStage();
+    server.sendScreen();
   }
   void resetScene() {
     for (int i = 0; i < basses.length; ++i) {

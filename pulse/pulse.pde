@@ -19,7 +19,7 @@ int showW = 2560;
 int showH = 720;
 
 void settings() {
-  size(2560, 720, P3D);
+  size(showW, showH, P3D);
   PJOGL.profile=1;
 }
 

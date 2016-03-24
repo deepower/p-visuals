@@ -3,6 +3,9 @@ import hype.extended.colorist.HColorPool;
 import hype.extended.behavior.HRotate;
 import hype.extended.behavior.HTween;
 import de.looksgood.ani.*;
+import codeanticode.syphon.*;
+
+SyphonServer server;
 
 HDrawablePool pool;
 HColorPool colors;
@@ -15,13 +18,19 @@ CurrentShow s;
 int showW = 2560;
 int showH = 720;
 
-void setup() {
+void settings() {
   size(2560, 720, P3D);
+  PJOGL.profile=1;
+}
+
+void setup() {
   s = new CurrentShow(this);
+  server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
   s.draw();
+  server.sendScreen();
 }
 
 void controllerChange(int channel, int number, int value) {

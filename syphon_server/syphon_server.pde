@@ -4,12 +4,12 @@ PGraphics canvas;
 SyphonServer server;
 
 void settings() {
-  size(1280,720, P3D);
+  size(400,400, P3D);
   PJOGL.profile=1;
 }
 
 void setup() { 
-  canvas = createGraphics(1280, 720, P3D);
+  canvas = createGraphics(400, 400, P3D);
   
   // Create syhpon server to send frames out.
   server = new SyphonServer(this, "Processing Syphon");

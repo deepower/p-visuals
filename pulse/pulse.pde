@@ -12,11 +12,11 @@ MidiBus myBus; // The MidiBus
 
 CurrentShow s;
 
-int showW = 1280;
+int showW = 2560;
 int showH = 720;
 
 void setup() {
-  size(1280, 720, P3D);
+  size(2560, 720, P3D);
   s = new CurrentShow(this);
 }
 
@@ -135,9 +135,9 @@ class CurrentShow extends DeepShow {
   }
   void noteOn(int channel, int pitch, int velocity) {
     // Reset the scene when received this note
-    if (channel == 0 && pitch == 0) {
+    if (channel == 10 && pitch == 0) {
       resetScene();
-    } else if (channel == 0 && pitch == 2) {
+    } else if (channel == 10 && pitch == 2) {
       note1B();
     }
   }

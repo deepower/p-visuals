@@ -27,6 +27,8 @@ void setup() {
 
 void draw() {
   s.draw();
+  image(canvas, 0, 0);
+  server.sendImage(canvas);
 }
 
 void controllerChange(int channel, int number, int value) {
@@ -62,11 +64,8 @@ class DeepShow {
     canvas = createGraphics(1280, 720, P3D);
   }
   void drawSyphon() {
-    image(canvas, 0, 0);
-    server.sendImage(canvas);
   }
   void draw() {
-    drawSyphon();
   }
   void resetScene() {
   }

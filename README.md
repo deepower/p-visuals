@@ -1,4 +1,4 @@
-## MIDI definitions ##
+## MIDI conventions ##
 
 CC levels:
 
@@ -12,7 +12,7 @@ Notes:
 - Every 16th beat: 0 (C-2)
 - Every 4B: 1 (C#-2)
 - Every 1B: 2 (D-2)
-- Hats: 20 (not yet implemented)
+- Hats: 20 (G#-1)
 
 ## Big thanks to ##
 

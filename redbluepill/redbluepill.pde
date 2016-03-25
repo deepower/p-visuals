@@ -67,7 +67,7 @@ class DeepShow {
   }
   void noteOn(int channel, int pitch, int velocity) {
     // Reset the scene when received this note
-    if (channel == 0 && pitch == 0) {
+    if (channel == 10 && pitch == 0) {
       resetScene();
     }
   }
@@ -169,9 +169,9 @@ class CurrentShow extends DeepShow {
   }
   void noteOn(int channel, int pitch, int velocity) {
     // Reset the scene when received this note
-    if (channel == 0 && pitch == 0) {
+    if (channel == 10 && pitch == 0) {
       resetScene();
-    } else if (channel == 0 && pitch == 1) {
+    } else if (channel == 10 && pitch == 20) {
       noteHat();
     }
   }

@@ -143,8 +143,8 @@ class CurrentShow extends DeepShow {
     rotateX(cameraRotationX);
     rotateY(cameraRotationY);
     rotateZ(cameraRotationZ);
-    rDrums.width(width*map(knobs[0], 0, 1, 0.01, 0.3));
-    rBass.width(width*map(knobs[1], 0, 1, 0.01, 0.15));
+    rDrums.width(showW*map(knobs[0], 0, 1, 0.01, 0.25));
+    rBass.width(showW*map(knobs[1], 0, 1, 0.01, 0.25));
     for (int i = 0; i < hats.length; ++i) {
       hats[i].animDraw();
     }
@@ -188,10 +188,10 @@ class DRect extends HRect {
   void animStart() {
     this.loc(showW/2 + random(-showW/2, showW/2), showH/2, 20 + random(20));
     alpha = 255;
-    a1 = new Ani(this, 2, "alpha", 0, Ani.EXPO_OUT);
+    a1 = new Ani(this, 1, "alpha", 0, Ani.CUBIC_IN_OUT);
 
-    xwidth = 50;
-    a2 = new Ani(this, 2, "xwidth", 0, Ani.EXPO_OUT);
+    xwidth = showW/10;
+    a2 = new Ani(this, 2, "xwidth", 0, Ani.CUBIC_OUT);
   }
   void animDraw() {
     this.alpha(alpha).width(xwidth);

@@ -164,7 +164,7 @@ class DRect extends HRect {
     alpha = 255;
     a1 = new Ani(this, 0.5, "alpha", 0, Ani.CUBIC_IN_OUT);
 
-    xwidth = showW/3;
+    xwidth = showW/4;
     a2 = new Ani(this, 0.5, "xwidth", 0, Ani.CUBIC_IN_OUT);
   }
   void animDraw() {

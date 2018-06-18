@@ -24,21 +24,17 @@ void setup() {
   server = new SyphonServer(this, "Processing Syphon");
   aa = new AudioAnalyzer(this);
   
-  H.init(this).background(#242424);
+  H.init(this).background(#000000);
 
-  canvas = new HCanvas().autoClear(false).fade(5);
+  canvas = new HCanvas().autoClear(false).fade(10);
   H.add(canvas);
 
-  canvas.add( rect = new HRect(50).rounding(5) ).noStroke().fill(#FF3300).rotate(45);
+  canvas.add( rect = new HRect(50)).noStroke().fill(#FFFFFF).rotate(45);
 }
 
 void draw() {
-  fill(255);
-  ellipse(50, 50, 100, 100);
-  
-  rect.loc( (int)random(width), (int)random(height));
+  rect.height(100*aa.levels[0]).loc( (int)random(width), (int)random(height));
   aa.draw();
-  print(aa.levels[0]);
   H.drawStage();
   
   server.sendScreen();

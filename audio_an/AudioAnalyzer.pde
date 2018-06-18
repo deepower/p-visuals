@@ -46,7 +46,7 @@ class AudioAnalyzer {
     fftLin.forward( jingle.mix );
     for(int i = 0; i < levelAverages; i++)
     {
-      levels[i] = fftLin.getBand(i);
+      levels[i] = fftLin.getAvg(i);
     }
   }
 }

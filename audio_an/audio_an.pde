@@ -37,6 +37,8 @@ void draw() {
   ellipse(50, 50, 100, 100);
   
   rect.loc( (int)random(width), (int)random(height));
+  aa.draw();
+  print(aa.levels[0]);
   H.drawStage();
   
   server.sendScreen();

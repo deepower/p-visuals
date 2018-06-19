@@ -5,23 +5,14 @@ Minim minim;
 AudioPlayer jingle;
 FFT fftLin;
 
-float height3;
-float height23;
-float spectrumScale = 4;
 int levelAverages = 8;
 
-
 class AudioAnalyzer {
-  public int id;
   public float[] levels = new float[levelAverages];
   
   PApplet that;
   
   AudioAnalyzer(PApplet tthat) {
-    id = 1;
-    
-    height3 = showH/3;
-    height23 = 2*showH/3;
     
     that = tthat;
 

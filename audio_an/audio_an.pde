@@ -1,4 +1,6 @@
 import hype.*;
+import hype.extended.behavior.HTween;
+
 import de.looksgood.ani.*;
 import codeanticode.syphon.*;
 
@@ -11,6 +13,8 @@ MidiBus myBus; // The MidiBus
 
 HCanvas canvas;
 HRect   rect;
+
+HTween t1a;
 
 int showW = 1280;
 int showH = 720;
@@ -29,7 +33,17 @@ void setup() {
   canvas = new HCanvas().autoClear(false).fade(10);
   H.add(canvas);
 
-  canvas.add( rect = new HRect(50)).noStroke().fill(#FFFFFF).rotate(45);
+  rect = new HRect(50);
+
+  t1a = new HTween()
+    .target(rect).property(H.HEIGHT)
+    .start(1)
+    .end(50)
+    .ease(0.005)
+    .spring(0.95)
+  ;
+
+  canvas.add(rect).noStroke().fill(#FFFFFF).rotate(45);
 }
 
 void draw() {

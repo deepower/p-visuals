@@ -6,9 +6,13 @@ AudioPlayer jingle;
 FFT fftLin;
 
 int levelAverages = 8;
+int levelSteps = 16;
+float levelLowCut = 2;
 
 class AudioAnalyzer {
   public float[] levels = new float[levelAverages];
+  public float[][] levelsHistory = new float[levelAverages][levelSteps];
+  public float[][] levelsMaximumHistory = new float[levelAverages][levelSteps];
   
   PApplet that;
   
@@ -37,7 +41,14 @@ class AudioAnalyzer {
     fftLin.forward( jingle.mix );
     for(int i = 0; i < levelAverages; i++)
     {
-      levels[i] = fftLin.getAvg(i);
+      // If current level is less than levelLowCut, make it 0
+      levels[i] = max(fftLin.getAvg(i) - levelLowCut, 0);
+
+      // Add current values to history
+      for(int j = 0; j < levelSteps; j++)
+      {
+        levelsHistory[i] = append (levelsHistory[i], fftLin.getAvg(i));
+      }
     }
   }
 }

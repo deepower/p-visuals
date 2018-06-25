@@ -7,12 +7,13 @@ import codeanticode.syphon.*;
 SyphonServer server;
 
 AudioAnalyzer aa;
-
-import themidibus.*; //Import the library
-MidiBus myBus; // The MidiBus
+BeatDetect beat;
+BeatListener bl;
 
 HCanvas canvas;
-HRect   rect;
+HRect   rect, rectLevel;
+PFont font1;
+HText f1;
 
 HTween t1a;
 
@@ -30,10 +31,13 @@ void setup() {
   
   H.init(this).background(#000000);
 
-  canvas = new HCanvas().autoClear(false).fade(10);
+  canvas = new HCanvas().autoClear(true);
   H.add(canvas);
 
   rect = new HRect(50);
+
+  rectLevel = new HRect(100);
+  rectLevel.noStroke().fill(#FF9900).anchorAt(H.CENTER).loc(width/2, height/2);
 
   t1a = new HTween()
     .target(rect).property(H.HEIGHT)
@@ -43,11 +47,20 @@ void setup() {
     .spring(0.95)
   ;
 
-  canvas.add(rect).noStroke().fill(#FFFFFF).rotate(45);
+  font1 = createFont("GothaProMed.ttf", 48);
+  f1 = new HText("T / L",48, font1);
+  f1.fill(#FFFFFF).anchorAt(H.CENTER_Y).loc(100,100);
+
+  H.add(f1);
+
+  canvas.add(rect).noStroke().fill(#FFFFFF);
+  canvas.add(rectLevel);
 }
 
 void draw() {
   rect.height(100*aa.levels[0]).loc( (int)random(width), (int)random(height));
+  rectLevel.height(100*aa.levels[0]);
+  f1.text(str(100*aa.levels[0]));
   aa.draw();
   H.drawStage();
   

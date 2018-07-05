@@ -43,8 +43,7 @@ void setup() {
     .target(rectLevel).property(H.HEIGHT)
     .start(showH)
     .end(10)
-    .ease(0.005)
-    .spring(0.95)
+    .ease(0.1)
   ;
 
   font1 = createFont("GothaProMed.ttf", 48);
@@ -60,7 +59,7 @@ void setup() {
 void draw() {
   aa.draw();
 
-  if ( aa.beat.isKick() ) {
+  if ( aa.beat.isRange(0, 1, 1) ) {
     t1a.unregister();
     t1a.start(showH).end(10).register();
   } else {

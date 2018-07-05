@@ -40,9 +40,9 @@ void setup() {
   rectLevel.noStroke().fill(#FF9900).anchorAt(H.CENTER).loc(width/2, height/2);
 
   t1a = new HTween()
-    .target(rect).property(H.HEIGHT)
-    .start(1)
-    .end(50)
+    .target(rectLevel).property(H.HEIGHT)
+    .start(showH)
+    .end(10)
     .ease(0.005)
     .spring(0.95)
   ;
@@ -58,10 +58,14 @@ void setup() {
 }
 
 void draw() {
-  // rect.height(100*aa.levels[0]).loc( (int)random(width), (int)random(height));
-  // rectLevel.height(100*aa.levels[0]);
-  // f1.text(str(100*aa.levels[0]));
   aa.draw();
+
+  if ( aa.beat.isKick() ) {
+    t1a.unregister();
+    t1a.start(showH).end(10).register();
+  } else {
+  }
+
   H.drawStage();
   
   server.sendScreen();

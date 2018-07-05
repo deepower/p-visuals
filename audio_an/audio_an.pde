@@ -59,10 +59,9 @@ void setup() {
 void draw() {
   aa.draw();
 
-  if ( aa.beat.isRange(0, 1, 1) ) {
+  if ( aa.beat.isRange(2, 5, 3) ) {
     t1a.unregister();
     t1a.start(showH).end(10).register();
-  } else {
   }
 
   H.drawStage();

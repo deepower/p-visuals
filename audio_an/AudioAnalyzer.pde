@@ -23,7 +23,7 @@ class AudioAnalyzer {
     beat = new BeatDetect(song.bufferSize(), song.sampleRate());
 
     // 130 BPM is maximum, it comes to 460 ms
-    beat.setSensitivity(460);  
+    // beat.setSensitivity(10);  
 
     // make a new beat listener, so that we won't miss any buffers for the analysis
     bl = new BeatListener(beat, song);  

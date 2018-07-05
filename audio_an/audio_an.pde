@@ -58,9 +58,9 @@ void setup() {
 }
 
 void draw() {
-  rect.height(100*aa.levels[0]).loc( (int)random(width), (int)random(height));
-  rectLevel.height(100*aa.levels[0]);
-  f1.text(str(100*aa.levels[0]));
+  // rect.height(100*aa.levels[0]).loc( (int)random(width), (int)random(height));
+  // rectLevel.height(100*aa.levels[0]);
+  // f1.text(str(100*aa.levels[0]));
   aa.draw();
   H.drawStage();
   

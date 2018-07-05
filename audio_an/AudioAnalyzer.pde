@@ -2,17 +2,10 @@ import ddf.minim.analysis.*;
 import ddf.minim.*;
 
 Minim minim;  
-AudioPlayer jingle;
+AudioPlayer song;
 FFT fftLin;
 
-int levelAverages = 8;
-int levelSteps = 16;
-float levelLowCut = 2;
-
 class AudioAnalyzer {
-  public float[] levels = new float[levelAverages];
-  public float[][] levelsHistory = new float[levelAverages][levelSteps];
-  public float[][] levelsMaximumHistory = new float[levelAverages][levelSteps];
   
   PApplet that;
   
@@ -21,34 +14,16 @@ class AudioAnalyzer {
     that = tthat;
 
     minim = new Minim(that);
-    jingle = minim.loadFile("deep.mp3", 1024);
+    song = minim.loadFile("deep.mp3", 1024);
     
     // loop the file
-    jingle.loop();
+    song.loop();
     
-    // create an FFT object that has a time-domain buffer the same size as jingle's sample buffer
-    // note that this needs to be a power of two 
-    // and that it means the size of the spectrum will be 1024. 
-    // see the online tutorial for more info.
-    fftLin = new FFT( jingle.bufferSize(), jingle.sampleRate() );
-    
-    // calculate the averages by grouping frequency bands linearly. use 8 averages.
-    fftLin.linAverages( levelAverages );
+    beat = new BeatDetect(song.bufferSize(), song.sampleRate());
     
   }
   
   void draw() {
-    fftLin.forward( jingle.mix );
-    for(int i = 0; i < levelAverages; i++)
-    {
-      // If current level is less than levelLowCut, make it 0
-      levels[i] = max(fftLin.getAvg(i) - levelLowCut, 0);
-
-      // Add current values to history
-      for(int j = 0; j < levelSteps; j++)
-      {
-        levelsHistory[i] = append (levelsHistory[i], fftLin.getAvg(i));
-      }
-    }
+    
   }
 }

@@ -8,8 +8,14 @@ HColorPool    colors;
 HRect rect1;
 HGridLayout layout1;
 
+int showW = 1280;
+int showH = 720;
+void settings() {
+  size(showW, showH, P2D);
+  PJOGL.profile=1;
+}
+
 void setup() {
-	size(640,640);
 	H.init(this).background(#242424);
 
 	colors = new HColorPool(#FFFFFF);

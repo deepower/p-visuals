@@ -16,11 +16,10 @@ HRect   rect, rectLevel;
 HTween t1a, t2a;
 HCallback cb;
 
-int showW = 1280;
-int showH = 720;
-
 float tweenEase = 0.2;
 
+int showW = 1280;
+int showH = 720;
 void settings() {
   size(showW, showH, P3D);
   PJOGL.profile=1;

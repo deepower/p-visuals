@@ -13,10 +13,13 @@ BeatListener bl;
 HCanvas canvas;
 HRect   rect, rectLevel;
 
-HTween t1a;
+HTween t1a, t2a;
+HCallback cb;
 
 int showW = 1280;
 int showH = 720;
+
+float tweenEase = 0.2;
 
 void settings() {
   size(showW, showH, P3D);
@@ -33,6 +36,7 @@ void setup() {
   H.add(canvas);
 
   rect = new HRect(50);
+  rect.anchorAt(H.CENTER);
 
   rectLevel = new HRect(100);
   rectLevel.noStroke().fill(#FF9900).anchorAt(H.CENTER).loc(width/2, height/2);
@@ -43,6 +47,19 @@ void setup() {
     .end(10)
     .ease(0.1)
   ;
+
+  t2a = new HTween()
+    .target(rect).property(H.HEIGHT).start(1).end(100).ease(tweenEase)
+  ;
+
+  cb = new HCallback() {
+    public void run(Object obj) {
+      t2a.start(100).end(1).ease(tweenEase).register();
+      println("obj: "+obj);
+    }
+  };
+
+  t2a.register().callback(cb);
 
   canvas.add(rect).noStroke().fill(#FFFFFF);
   canvas.add(rectLevel);
@@ -57,7 +74,9 @@ void draw() {
   }
 
   if (aa.beat.isRange(25, 26, 1)) {
+    t2a.unregister();
     rect.height(100).loc( (int)random(width), (int)random(height));
+    t2a.start(1).end(100).register().callback(cb);
   }
 
   H.drawStage();
